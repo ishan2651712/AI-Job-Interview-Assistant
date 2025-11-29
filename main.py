@@ -8,9 +8,6 @@ from dotenv import load_dotenv
 import os
 import traceback
 
-# -------------------- ENV + LLM SETUP --------------------
-
-# Load environment variables from .env
 load_dotenv()
 
 GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
@@ -18,14 +15,14 @@ GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
 if GEMINI_API_KEY is None:
     raise ValueError("GEMINI_API_KEY is not set. Please add it to your .env file.")
 
-# Configure Gemini LLM via CrewAI
+
 gemini_llm = LLM(
-    model="gemini/gemini-2.5-pro",  # recommended Gemini model for CrewAI
+    model="gemini/gemini-2.5-pro",  
     api_key=GEMINI_API_KEY,
     temperature=0.4,
 )
 
-# -------------------- FASTAPI APP SETUP --------------------
+
 
 app = FastAPI(
     title="AI Job Interview Assistant",
@@ -33,24 +30,24 @@ app = FastAPI(
     version="1.0.0",
 )
 
-# Serve static frontend files (index.html etc.)
+
 app.mount("/static", StaticFiles(directory="static"), name="static")
 
-# CORS (for browser requests)
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # dev: allow all; prod: restrict
+    allow_origins=["*"],  
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
 
-# -------------------- BASIC ROUTES --------------------
+
 
 @app.get("/")
 def root():
-    # Serve the frontend HTML file
+    
     return FileResponse("static/index.html")
 
 
@@ -59,15 +56,15 @@ def health_check():
     return {"status": "ok"}
 
 
-# -------------------- REQUEST MODEL --------------------
+
 
 class JobRoleRequest(BaseModel):
     role: str
-    experience_level: str | None = "Fresher"  # e.g. Fresher, Junior, Senior
-    tech_stack: str | None = None            # e.g. MERN, Python, Java, Data Analyst
+    experience_level: str | None = "Fresher"  
+    tech_stack: str | None = None            
 
 
-# -------------------- AGENT HELPERS --------------------
+
 
 def build_career_agent():
     return Agent(
@@ -109,7 +106,7 @@ def build_tips_agent():
     )
 
 
-# -------------------- ENDPOINT 1: OVERVIEW --------------------
+
 
 @app.post("/generate_overview")
 def generate_overview(request: JobRoleRequest):
@@ -155,7 +152,6 @@ def generate_overview(request: JobRoleRequest):
     }
 
 
-# -------------------- ENDPOINT 2: TECHNICAL Q&A --------------------
 
 @app.post("/generate_technical_qa")
 def generate_technical_qa(request: JobRoleRequest):
@@ -206,7 +202,7 @@ def generate_technical_qa(request: JobRoleRequest):
     }
 
 
-# -------------------- ENDPOINT 3: HR / BEHAVIORAL Q&A --------------------
+
 
 @app.post("/generate_hr_qa")
 def generate_hr_qa(request: JobRoleRequest):
@@ -258,7 +254,7 @@ def generate_hr_qa(request: JobRoleRequest):
     }
 
 
-# -------------------- ENDPOINT 4: INTERVIEW TIPS --------------------
+
 
 @app.post("/generate_interview_tips")
 def generate_interview_tips(request: JobRoleRequest):
