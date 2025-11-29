@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Job Interview Preparation</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <style>
+      * {
+        box-sizing: border-box;
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+          sans-serif;
+      }
+
+      body {
+        margin: 0;
+        padding: 0;
+        min-height: 100vh;
+        background-color: #050608; /* deep charcoal */
+        color: #e5e7eb;
+        display: flex;
+        justify-content: center;
+      }
+
+      .page {
+        max-width: 1180px;
+        width: 100%;
+        padding: 28px 18px 36px;
+      }
+
+      .header {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+        margin-bottom: 20px;
+      }
+
+      .title-row {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        flex-wrap: wrap;
+      }
+
+      h1 {
+        font-size: 2rem;
+        margin: 0;
+        color: #f9fafb;
+      }
+
+      .badge {
+        font-size: 0.75rem;
+        padding: 4px 11px;
+        border-radius: 999px;
+        border: 1px solid #22c55e; /* emerald accent */
+        background: rgba(34, 197, 94, 0.08);
+        color: #bbf7d0;
+      }
+
+      .subtitle {
+        color: #9ca3af;
+        margin: 0;
+        font-size: 0.92rem;
+        max-width: 740px;
+      }
+
+      .shell {
+        background: #0b0b10;
+        border-radius: 18px;
+        border: 1px solid #27272f;
+        box-shadow: 0 24px 60px rgba(0, 0, 0, 0.85),
+          0 0 0 1px rgba(24, 24, 27, 0.9);
+        padding: 20px 18px 22px;
+      }
+
+      .form-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 14px;
+        margin-bottom: 16px;
+      }
+
+      .form-group {
+        flex: 1;
+        min-width: 200px;
+      }
+
+      label {
+        font-size: 0.85rem;
+        margin-bottom: 5px;
+        display: block;
+        color: #d4d4d8;
+      }
+
+      input,
+      select {
+        width: 100%;
+        padding: 9px 11px;
+        border-radius: 10px;
+        border: 1px solid #3f3f46;
+        background: #09090b;
+        color: #e5e7eb;
+        font-size: 0.93rem;
+        transition: border-color 0.16s ease, box-shadow 0.16s ease,
+          background 0.16s ease;
+      }
+
+      input::placeholder {
+        color: #6b7280;
+      }
+
+      input:focus,
+      select:focus {
+        outline: none;
+        border-color: #22c55e;
+        box-shadow: 0 0 0 1px rgba(34, 197, 94, 0.6);
+        background: #020617;
+      }
+
+      .actions {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 10px;
+        margin-top: 2px;
+        flex-wrap: wrap;
+      }
+
+      button {
+        padding: 9px 18px;
+        border-radius: 999px;
+        border: none;
+        background: linear-gradient(
+          135deg,
+          #22c55e,
+          #14b8a6
+        ); /* emerald → teal */
+        color: #0b1120;
+        font-weight: 600;
+        cursor: pointer;
+        font-size: 0.9rem;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        box-shadow: 0 12px 30px rgba(15, 23, 42, 0.9),
+          0 0 0 1px rgba(148, 163, 184, 0.25);
+      }
+
+      button:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+        box-shadow: none;
+      }
+
+      button span.loader {
+        width: 14px;
+        height: 14px;
+        border-radius: 999px;
+        border: 2px solid rgba(15, 23, 42, 0.9);
+        border-top-color: transparent;
+        animation: spin 0.8s linear infinite;
+      }
+
+      @keyframes spin {
+        to {
+          transform: rotate(360deg);
+        }
+      }
+
+      .status {
+        font-size: 0.8rem;
+        color: #9ca3af;
+      }
+
+      .status.error {
+        color: #fb7185;
+      }
+
+      .grid {
+        margin-top: 18px;
+        display: grid;
+        grid-template-columns: minmax(0, 1fr);
+        gap: 14px;
+      }
+
+      @media (min-width: 900px) {
+        .grid {
+          grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
+        }
+      }
+
+      .section-card {
+        background: #101013;
+        border-radius: 14px;
+        border: 1px solid #27272f;
+        padding: 10px 11px 12px;
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+        min-height: 200px;
+      }
+
+      .section-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 6px;
+        margin-bottom: 2px;
+      }
+
+      .section-card h2 {
+        font-size: 0.95rem;
+        margin: 0;
+        color: #f4f4f5;
+      }
+
+      .chip {
+        font-size: 0.7rem;
+        padding: 3px 7px;
+        border-radius: 999px;
+        border: 1px solid #3f3f46;
+        color: #a1a1aa;
+        white-space: nowrap;
+        background: #18181b;
+      }
+
+      pre {
+        background: #09090b;
+        border-radius: 10px;
+        padding: 8px 9px;
+        margin: 0;
+        white-space: pre-wrap;
+        word-wrap: break-word;
+        font-size: 0.84rem;
+        max-height: 300px;
+        overflow-y: auto;
+        border: 1px solid #27272f;
+        color: #e5e7eb;
+      }
+
+      /* Q&A list styling */
+
+      .qa-list {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        max-height: 300px;
+        overflow-y: auto;
+      }
+
+      .qa-item {
+        padding: 8px 9px;
+        border-radius: 10px;
+        background: #09090b;
+        border: 1px solid #27272f;
+        margin-bottom: 8px;
+      }
+
+      .qa-q {
+        font-size: 0.86rem;
+        font-weight: 600;
+        margin-bottom: 4px;
+        color: #f4f4f5;
+      }
+
+      .qa-a {
+        font-size: 0.83rem;
+        color: #d4d4d8;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="page">
+      <header class="header">
+        <div class="title-row">
+          <h1>Job Interview Preparation</h1>
+          <span class="badge">Agentic AI </span>
+        </div>
+        <p class="subtitle">
+          A smart interview preparation assistant that generates job-specific
+          role overviews, technical questions, HR behavioral answers, and expert
+          interview tips — tailored to the candidate's profile.
+        </p>
+      </header>
+
+      <main class="shell">
+        <div class="form-row">
+          <div class="form-group">
+            <label for="roleInput">Job Role</label>
+            <input
+              id="roleInput"
+              type="text"
+              placeholder="e.g. Software Engineer, Data Analyst, Web Developer"
+            />
+          </div>
+          <div class="form-group">
+            <label for="expInput">Experience Level</label>
+            <select id="expInput">
+              <option value="Fresher" selected>Fresher</option>
+              <option value="Junior">Junior</option>
+              <option value="Mid-Level">Mid-Level</option>
+              <option value="Senior">Senior</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="techInput">Tech Stack / Domain</label>
+            <input
+              id="techInput"
+              type="text"
+              placeholder="e.g. MERN, Java + Spring, Python + ML, SQL + PowerBI"
+            />
+          </div>
+        </div>
+
+        <div class="actions">
+          <button id="generateBtn">
+            <span id="btnText">Generate Interview Prep</span>
+            <span id="btnLoader" class="loader" style="display: none"></span>
+          </button>
+          <div class="status" id="status"></div>
+        </div>
+
+        <div class="grid">
+          <section class="section-card">
+            <div class="section-header">
+              <h2>Role Overview & Expectations</h2>
+              <span class="chip"
+                >Round structure, skills, responsibilities</span
+              >
+            </div>
+            <pre id="overviewArea">Overview will appear here...</pre>
+          </section>
+
+          <section class="section-card">
+            <div class="section-header">
+              <h2>Technical Interview Q&A</h2>
+              <span class="chip">Concepts • Coding • Stack-specific</span>
+            </div>
+            <ul id="techArea" class="qa-list">
+              <li class="qa-item">
+                <div class="qa-q">Technical questions will appear here...</div>
+                <div class="qa-a"></div>
+              </li>
+            </ul>
+          </section>
+
+          <section class="section-card">
+            <div class="section-header">
+              <h2>HR / Behavioral Interview Q&A</h2>
+              <span class="chip"
+                >Personality • Teamwork • Pressure handling</span
+              >
+            </div>
+            <ul id="hrArea" class="qa-list">
+              <li class="qa-item">
+                <div class="qa-q">HR questions will appear here...</div>
+                <div class="qa-a"></div>
+              </li>
+            </ul>
+          </section>
+
+          <section class="section-card">
+            <div class="section-header">
+              <h2>Interview Tips & Do's / Don'ts</h2>
+              <span class="chip">Preparation • Mistakes • Confidence</span>
+            </div>
+            <pre id="tipsArea">Tips will appear here...</pre>
+          </section>
+        </div>
+      </main>
+    </div>
+
+    <script>
+      const API_OVERVIEW = "/generate_overview";
+      const API_TECH = "/generate_technical_qa";
+      const API_HR = "/generate_hr_qa";
+      const API_TIPS = "/generate_interview_tips";
+
+      const roleInput = document.getElementById("roleInput");
+      const expInput = document.getElementById("expInput");
+      const techInput = document.getElementById("techInput");
+
+      const generateBtn = document.getElementById("generateBtn");
+      const btnText = document.getElementById("btnText");
+      const btnLoader = document.getElementById("btnLoader");
+
+      const statusEl = document.getElementById("status");
+      const overviewArea = document.getElementById("overviewArea");
+      const techArea = document.getElementById("techArea");
+      const hrArea = document.getElementById("hrArea");
+      const tipsArea = document.getElementById("tipsArea");
+
+      function setLoading(isLoading) {
+        if (isLoading) {
+          generateBtn.disabled = true;
+          btnText.textContent = "Generating...";
+          btnLoader.style.display = "inline-block";
+          statusEl.classList.remove("error");
+          statusEl.textContent = "Generating overview...";
+        } else {
+          generateBtn.disabled = false;
+          btnText.textContent = "Generate Interview Prep";
+          btnLoader.style.display = "none";
+        }
+      }
+
+      // Convert "Q1: ... A1: ..." style text into nice HTML blocks
+      function renderQA(text, container) {
+        container.innerHTML = "";
+
+        if (!text || text.startsWith("Error")) {
+          const li = document.createElement("li");
+          li.className = "qa-item";
+          li.innerHTML = `<div class="qa-q">${
+            text || "No data generated."
+          }</div>`;
+          container.appendChild(li);
+          return;
+        }
+
+        const lines = text
+          .split("\n")
+          .map((l) => l.trim())
+          .filter((l) => l !== "");
+        const items = [];
+        let currentQ = null;
+        let currentA = "";
+
+        for (const line of lines) {
+          if (/^Q\d+:/i.test(line)) {
+            // Push previous if exists
+            if (currentQ !== null) {
+              items.push({ q: currentQ, a: currentA.trim() });
+            }
+            currentQ = line;
+            currentA = "";
+          } else if (/^A\d+:/i.test(line)) {
+            currentA = line;
+          } else {
+            // continuation line
+            if (currentA) {
+              currentA += " " + line;
+            } else if (currentQ) {
+              currentQ += " " + line;
+            }
+          }
+        }
+        if (currentQ !== null) {
+          items.push({ q: currentQ, a: currentA.trim() });
+        }
+
+        if (items.length === 0) {
+          const li = document.createElement("li");
+          li.className = "qa-item";
+          li.innerHTML = `<div class="qa-q">${text}</div>`;
+          container.appendChild(li);
+          return;
+        }
+
+        for (const { q, a } of items) {
+          const li = document.createElement("li");
+          li.className = "qa-item";
+
+          const qDiv = document.createElement("div");
+          qDiv.className = "qa-q";
+          qDiv.textContent = q;
+
+          const aDiv = document.createElement("div");
+          aDiv.className = "qa-a";
+          aDiv.textContent = a;
+
+          li.appendChild(qDiv);
+          if (a) li.appendChild(aDiv);
+          container.appendChild(li);
+        }
+      }
+
+      generateBtn.addEventListener("click", async () => {
+        const role = roleInput.value.trim();
+        const exp = expInput.value;
+        const tech = techInput.value.trim() || "General";
+
+        if (!role) {
+          statusEl.textContent = "";
+          statusEl.classList.add("error");
+          statusEl.textContent =
+            "Please enter a job role (e.g. Software Engineer).";
+          return;
+        }
+
+        overviewArea.textContent = "Loading overview...";
+        techArea.innerHTML = `<li class="qa-item"><div class="qa-q">Waiting for overview to finish...</div></li>`;
+        hrArea.innerHTML = `<li class="qa-item"><div class="qa-q">Waiting for technical Q&A to finish...</div></li>`;
+        tipsArea.textContent = "Waiting for previous sections...";
+        statusEl.textContent = "";
+        statusEl.classList.remove("error");
+        setLoading(true);
+
+        const body = JSON.stringify({
+          role: role,
+          experience_level: exp,
+          tech_stack: tech,
+        });
+
+        try {
+          // 1) Overview
+          statusEl.textContent = "Generating overview...";
+          const ovRes = await fetch(API_OVERVIEW, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body,
+          });
+          if (!ovRes.ok) throw new Error("Error in overview: " + ovRes.status);
+          const ovData = await ovRes.json();
+          overviewArea.textContent =
+            ovData.overview || "No overview generated.";
+          statusEl.textContent = "Overview done ✅ Generating technical Q&A...";
+
+          // 2) Technical Q&A
+          techArea.innerHTML = `<li class="qa-item"><div class="qa-q">Loading technical questions...</div></li>`;
+          const techRes = await fetch(API_TECH, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body,
+          });
+          if (!techRes.ok)
+            throw new Error("Error in technical Q&A: " + techRes.status);
+          const techData = await techRes.json();
+          renderQA(techData.technical_qa, techArea);
+          statusEl.textContent =
+            "Technical Q&A done ✅ Generating HR questions...";
+
+          // 3) HR Q&A
+          hrArea.innerHTML = `<li class="qa-item"><div class="qa-q">Loading HR questions...</div></li>`;
+          const hrRes = await fetch(API_HR, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body,
+          });
+          if (!hrRes.ok) throw new Error("Error in HR Q&A: " + hrRes.status);
+          const hrData = await hrRes.json();
+          renderQA(hrData.hr_qa, hrArea);
+          statusEl.textContent = "HR Q&A done ✅ Generating interview tips...";
+
+          // 4) Tips
+          tipsArea.textContent = "Loading tips...";
+          const tipsRes = await fetch(API_TIPS, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body,
+          });
+          if (!tipsRes.ok) throw new Error("Error in tips: " + tipsRes.status);
+          const tipsData = await tipsRes.json();
+          tipsArea.textContent =
+            tipsData.interview_tips || "No tips generated.";
+
+          statusEl.textContent =
+            "All sections generated ✅ Scroll & start preparing.";
+        } catch (err) {
+          console.error(err);
+          statusEl.classList.add("error");
+          statusEl.textContent = "Error: " + err.message;
+        } finally {
+          setLoading(false);
+        }
+      });
+    </script>
+  </body>
+</html>
